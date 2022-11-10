@@ -1,39 +1,48 @@
-import throttle from "lodash.throttle"
+import throttle from 'lodash.throttle';
 
-const STORAGE_KEY = "feedback-form-state";
+const STORAGE_KEY = 'feedback-form-state';
 
-const refs = {
-   form: document.querySelector(".feedback-form"),
-   email: document.querySelector("input"),
-   textarea: document.querySelector("textarea"),
+const userData = {
+  email: '',
+  message: '',
 };
 
-refs.form.addEventListener("submit", onFormSubmit)
-// refs.email.addEventListener("input", onEmailInput)
-refs.textarea.addEventListener("input", throttle(onTextareaInput, 500));
+const refs = {
+  form: document.querySelector('.feedback-form'),
+  email: document.querySelector('.feedback-form input'),
+  message: document.querySelector('.feedback-form textarea'),
+};
+
+refs.form.addEventListener('submit', onFormSubmit);
+refs.email.addEventListener('input', throttle(onsetData, 500));
+refs.message.addEventListener('input', throttle(onSetData, 500));
 
 populateMessage();
 // "feedback-form-state" - ключ до сховища
 
 function onFormSubmit(evt) {
-evt.preventDefault();
+  evt.preventDefault();
+  console.log(`e-mail: ${refs.email.value}, message: ${refs.message.value}`);
 
-evt.currentTarget.reset();
+  evt.target.reset();
 
-localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(STORAGE_KEY);
 }
 
-// нижче треба добавити тротл
-function onTextareaInput(evt) {
-    const message = evt.target.value;
-    localStorage.setItem(STORAGE_KEY, message)
+
+function onSetData(evt) {
+    userData.email = refs.email.value;
+    userData.message = refs.message.value;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
 }
 
 function populateMessage() {
-    const savedMessage = localStorage.getItem(STORAGE_KEY);
+  const savedData = localStorage.getItem(STORAGE_KEY);
+  const parsedData = JSON.parse(savedData)
 
-    if(savedMessage) {
-        console.log(savedMessage);
-        refs.textarea.value = savedMessage;
-    }
+  if (parsedData) {
+    refs.email.value = parsedData.email || ""
+
+    refs.message.value = parsedData.message || "";
+  }
 }
