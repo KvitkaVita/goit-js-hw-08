@@ -14,7 +14,7 @@ const refs = {
 };
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.email.addEventListener('input', throttle(onsetData, 500));
+refs.email.addEventListener('input', throttle(onSetData, 500));
 refs.message.addEventListener('input', throttle(onSetData, 500));
 
 populateMessage();
