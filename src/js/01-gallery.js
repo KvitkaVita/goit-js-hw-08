@@ -19,26 +19,8 @@ const galleryMarkup = galleryItems
   .join('');
 gallery.insertAdjacentHTML('beforeend', galleryMarkup);
 
-new SimpleLightBox('.gallery a', {
+new SimpleLightbox('.gallery a', {
   captionData: 'alt',
   captionDelay: 250,
 });
 
-// console.log(galleryMarkup)
-// let instance = '';
-// gallery.addEventListener('click', onImageClick);
-// function onImageClick(event) {
-//   event.preventDefault();
-//   if (event.target.nodeName !== 'IMG') {
-//     return;
-//   }
-//   instance = SimpleLightbox.create(`<img src=${event.target.dataset.source}>`);
-//   instance.show();
-//   document.addEventListener('keydown', onModalCloseToEscape);
-// }
-// function onModalCloseToEscape(evt) {
-//   if (evt.code === 'Escape') {
-//     instance.close();
-//     document.removeEventListener('keydown', onModalCloseToEscape);
-//   }
-// }
